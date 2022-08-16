@@ -1,4 +1,4 @@
-module github.com/KingKeleos/golagnPostgresFiller
+module github.com/KingKeleos/golangPostgresFiller
 
 go 1.18
 
