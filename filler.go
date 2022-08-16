@@ -20,6 +20,9 @@ const charset = "abcdefghijklmnopqrstuvwxyz" +
 
 var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
+//Fill fills an already existing table with the structure of: 'id','text','value' in postgres.
+//It fills it witha random String with the lenght of 15 characters and a random integer with 4 digits.
+//With amonut, you specify the amount of inserts that you want to create.
 func Fill(dbname string, amount int) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		//psqlInfo := fmt.Sprintf("host=%s port=%d user=%s  dbname=%s sslmode=disable",
