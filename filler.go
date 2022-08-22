@@ -8,12 +8,7 @@ import (
 	"time"
 )
 
-var (
-	Host     = ""
-	Port     = ""
-	User     = ""
-	Password = ""
-)
+var Host, Port, User, Password string
 
 const charset = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
