@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	host     = ""
-	port     = ""
-	user     = ""
-	password = ""
+	Host     = ""
+	Port     = ""
+	User     = ""
+	Password = ""
 )
 
 const charset = "abcdefghijklmnopqrstuvwxyz" +
