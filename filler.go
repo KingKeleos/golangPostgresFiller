@@ -1,4 +1,4 @@
-package filler
+package pg_filler
 
 import (
 	"database/sql"
@@ -24,15 +24,9 @@ var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 func InsertOnce(dbname string, tableName string, tableSlice []string) {
 	db := connectToDatabase(dbname)
 	res := getMaxID(tableName, db)
-
 	column_names, column_types := getColumnData(db, tableName)
-
-	fmt.Println(column_types)
-
 	id := res + 1
 	insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_names, id, createValue(column_types))
-
-	fmt.Println(insertStmt)
 
 	_, err := db.Exec(insertStmt)
 	if err != nil {
@@ -51,7 +45,9 @@ func createValue(column_type []string) string {
 		default:
 		}
 	}
+
 	valueString = valueString[:len(valueString)-1]
+
 	return valueString
 }
 
@@ -76,8 +72,6 @@ func getColumnData(db *sql.DB, tableName string) (string, []string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println("\n", column_name, column_Type)
 
 	column_names = column_name
 
