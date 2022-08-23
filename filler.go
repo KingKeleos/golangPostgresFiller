@@ -18,9 +18,9 @@ const charset = "abcdefghijklmnopqrstuvwxyz" +
 
 var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-//InsertOnce insters one single random string and integer into the database.
-//Requires the name of the Database to connect to as well as the Name of the table to intert into
-//Next to the connection strings, provide a string slice with the names of the columns
+// InsertOnce insters one single random string and integer into the database.
+// Requires the name of the Database to connect to as well as the Name of the table to intert into
+// Next to the connection strings, provide a string slice with the names of the columns
 func InsertOnce(dbname string, tableName string, tableSlice []string) {
 	db := connectToDatabase(dbname)
 	res := getMaxID(tableName, db)
@@ -119,9 +119,9 @@ func getMaxID(tableName string, db *sql.DB) int {
 	return res
 }
 
-//Fill fills an already existing table with the structure of: 'id','text','value' in postgres.
-//It fills it witha random String with the lenght of 15 characters and a random integer with 4 digits.
-//With amonut, you specify the amount of inserts that you want to create.
+// Fill fills an already existing table with the structure of: 'id','text','value' in postgres.
+// It fills it witha random String with the lenght of 15 characters and a random integer with 4 digits.
+// With amonut, you specify the amount of inserts that you want to create.
 func Fill(dbname string, tableName string, amount int) {
 	db := connectToDatabase(dbname)
 	res := getMaxID(tableName, db)
