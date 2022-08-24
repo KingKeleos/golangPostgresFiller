@@ -80,7 +80,6 @@ func getColumnData(db *sql.DB, tableName string) (string, []string) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println("\n", column_name, column_Type)
 
 		column_names = column_names + ", " + column_name
 		column_types = append(column_types, column_Type)
