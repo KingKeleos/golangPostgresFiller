@@ -21,7 +21,7 @@ var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 // InsertOnce insters one single random string and integer into the database.
 // Requires the name of the Database to connect to as well as the Name of the table to intert into
 // Next to the connection strings, provide a string slice with the names of the columns
-func InsertOnce(dbname string, tableName string, tableSlice []string) {
+func InsertOnce(dbname string, tableName string) {
 	db := connectToDatabase(dbname)
 	res := getMaxID(tableName, db)
 	column_names, column_types := getColumnData(db, tableName)
