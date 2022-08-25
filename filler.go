@@ -11,16 +11,8 @@ import (
 // InsertOnce insters one single random string and integer into the database.
 // Requires the name of the Database to connect to as well as the Name of the table to intert into
 // Next to the connection strings, provide a string slice with the names of the columns
-func InsertOnce(dbname string, tableName string) error {
-	conStr := "host=localhost port=5432 user=postgres password= dbname=tes sslmode=disable"
-	dbcon := database.DBConn{}
-
-	db, err := sql.Open("postgres", conStr)
-	dbcon.DB = db
-	if err != nil {
-		fmt.Printf("Unable to connect to Database %s", dbname)
-		return err
-	}
+func InsertOnce(tableName string, db *sql.DB) error {
+	dbcon := database.DBConn{DB: db}
 
 	res, err := dbcon.GetMaxID(tableName)
 	if err != nil {
@@ -54,16 +46,8 @@ func InsertOnce(dbname string, tableName string) error {
 // Fill fills an already existing table with the structure of: 'id','text','value' in postgres.
 // It fills it witha random String with the lenght of 15 characters and a random integer with 4 digits.
 // With amonut, you specify the amount of inserts that you want to create.
-func Fill(dbname string, tableName string, amount int) error {
-	conStr := "host=localhost port=5432 user=postgres password= dbname=tes sslmode=disable"
-	dbcon := database.DBConn{}
-
-	db, err := sql.Open("postgres", conStr)
-	dbcon.DB = db
-	if err != nil {
-		fmt.Printf("Unable to connect to Database %s", dbname)
-		return err
-	}
+func Fill(tableName string, amount int, db *sql.DB) error {
+	dbcon := database.DBConn{DB: db}
 
 	res, err := dbcon.GetMaxID(tableName)
 	if err != nil {
