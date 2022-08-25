@@ -48,6 +48,7 @@ func InsertOnce(tableName string, db *sql.DB) error {
 // With amonut, you specify the amount of inserts that you want to create.
 func Fill(tableName string, amount int, db *sql.DB) error {
 	dbcon := database.DBConn{DB: db}
+	var column_names string
 
 	res, err := dbcon.GetMaxID(tableName)
 	if err != nil {
@@ -59,6 +60,10 @@ func Fill(tableName string, amount int, db *sql.DB) error {
 		return err
 	}
 
+	for key := range column_map {
+		column_names = column_names + key
+	}
+
 	for i := 0; i < amount; i++ {
 		id := res + i + 1
 
@@ -67,7 +72,7 @@ func Fill(tableName string, amount int, db *sql.DB) error {
 			return err
 		}
 
-		insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_map, id, genString)
+		insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_names, id, genString)
 
 		_, err = dbcon.DB.Exec(insertStmt)
 		if err != nil {
