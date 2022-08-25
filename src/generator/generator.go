@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"errors"
 	"math/rand"
 	"strconv"
 	"time"
@@ -25,7 +26,7 @@ func stringWithCharset(length int, charset string) string {
 	return string(b)
 }
 
-func CreateValue(column_type []string) string {
+func CreateValue(column_type map[string]string) (string, error) {
 	var valueString string
 
 	for _, a := range column_type {
@@ -35,10 +36,11 @@ func CreateValue(column_type []string) string {
 		case "text":
 			valueString = valueString + "'" + stringGenerator(15) + "'" + ","
 		default:
+			return "", errors.New("the column did not match either text, nor integer")
 		}
 	}
 
 	valueString = valueString[:len(valueString)-1]
 
-	return valueString
+	return valueString, nil
 }
