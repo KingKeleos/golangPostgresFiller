@@ -3,6 +3,7 @@ package pg_filler
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 
 	"github.com/KingKeleos/golangPostgresFiller/src/database"
 	"github.com/KingKeleos/golangPostgresFiller/src/generator"
@@ -48,7 +49,7 @@ func InsertOnce(tableName string, db *sql.DB) error {
 // With amonut, you specify the amount of inserts that you want to create.
 func Fill(tableName string, amount int, db *sql.DB) error {
 	dbcon := database.DBConn{DB: db}
-	var column_names string
+	var b strings.Builder
 
 	res, err := dbcon.GetMaxID(tableName)
 	if err != nil {
@@ -61,8 +62,13 @@ func Fill(tableName string, amount int, db *sql.DB) error {
 	}
 
 	for key := range column_map {
-		column_names = column_names + key
+		_, err := b.WriteString(key + ", ")
+		if err != nil {
+			return err
+		}
 	}
+
+	column_names := b.String()[:len(b.String())-2]
 
 	for i := 0; i < amount; i++ {
 		id := res + i + 1
