@@ -88,7 +88,7 @@ func Fill(tableName string, amount int, db *sql.DB) error {
 			return err
 		}
 
-		insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_names, id, genString)
+		insertStmt := fmt.Sprintf("insert into %s (id ,%s) values (%d, %s)", tableName, column_names, id, genString)
 
 		_, err = dbcon.DB.Exec(insertStmt)
 		if err != nil {
