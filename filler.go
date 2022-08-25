@@ -14,6 +14,7 @@ import (
 // Next to the connection strings, provide a string slice with the names of the columns
 func InsertOnce(tableName string, db *sql.DB) error {
 	dbcon := database.DBConn{DB: db}
+	var b strings.Builder
 
 	res, err := dbcon.GetMaxID(tableName)
 	if err != nil {
@@ -29,12 +30,21 @@ func InsertOnce(tableName string, db *sql.DB) error {
 		return err
 	}
 
+	for key := range column_map {
+		_, err := b.WriteString(key + ", ")
+		if err != nil {
+			return err
+		}
+	}
+
+	column_names := b.String()[:len(b.String())-2]
+
 	genString, err := generator.CreateValue(column_map)
 	if err != nil {
 		return err
 	}
 
-	insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_map, id, genString)
+	insertStmt := fmt.Sprintf("insert into %s (%s) values (%d, %s)", tableName, column_names, id, genString)
 
 	_, err = dbcon.DB.Exec(insertStmt)
 	if err != nil {
